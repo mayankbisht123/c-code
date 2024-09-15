@@ -32,16 +32,75 @@ Node* insertBST(Node* root,int val)
     return root;
 }
 
-void preorder(Node* root)
+void inorder(Node* root)
 {
     if(root==NULL)
     return;
     
+    inorder(root->left);
     cout<<root->val<<" ";
-    preorder(root->left);
-    preorder(root->right);
+    inorder(root->right);
 }
 
+int kthSmallest(Node* root,int k,int& count)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+
+    int left=kthSmallest(root->left,k,count);
+    if(left!=0)
+    {
+    return left;
+    }
+    
+    
+    count++;
+    if(count==k)
+    {
+        return root->val;
+    }
+    
+    
+    int right=kthSmallest(root->right,k,count);
+    if(right!=0)
+    {
+        return right;
+    }
+    
+    return 0;
+}
+
+int kthLargest(Node* root,int k,int& count)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    
+    
+    int right=kthLargest(root->right,k,count);
+    if(right!=0)
+    {
+        return right;
+    }
+    
+    count++;
+    if(count==k)
+    {
+        return root->val;
+    }
+    
+    
+    int left=kthLargest(root->left,k,count);
+    if(left!=0)
+    {
+        return left;
+    }
+    
+    return 0;
+}
 
 int main()
 {
@@ -71,6 +130,16 @@ int main()
     root=insertBST(root,14);
     root=insertBST(root,16);
     
-    preorder(root);
+    
+    inorder(root);
+    
+    cout<<endl<<"Enter the kth value"<<endl;
+    int k;
+    cin>>k;
+    int c=0;
+    cout<<endl<<"The kth smallest is "<<kthSmallest(root,k,c)<<endl;
+    c=0;
+    cout<<"The kth largest is "<<kthLargest(root,k,c)<<endl;
+    
     return 0;
 }

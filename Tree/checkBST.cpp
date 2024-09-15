@@ -42,6 +42,21 @@ void preorder(Node* root)
     preorder(root->right);
 }
 
+bool checkBST(Node* root,int min,int max){
+    if(root==NULL)
+    {
+        return true;
+    }
+    
+    if(root->val<min || root->val>max)
+    {
+        return false;
+    }
+    
+    return checkBST(root->left,min,root->val) && checkBST(root->right,root->val,max);
+
+}
+
 
 int main()
 {
@@ -72,5 +87,15 @@ int main()
     root=insertBST(root,16);
     
     preorder(root);
+    cout<<endl;
+    
+    bool check=checkBST(root,INT_MIN,INT_MAX);
+    if(check)
+    {
+        cout<<"Yes it is a BST"<<endl;
+    }
+    else{
+        cout<<"It is not a BST"<<endl;
+    }
     return 0;
 }

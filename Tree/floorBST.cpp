@@ -42,6 +42,32 @@ void preorder(Node* root)
     preorder(root->right);
 }
 
+int floorBST(Node* root,int key,int flor)
+{
+    if(root==NULL)
+    {
+        return flor;
+    }
+    if(root->val==key)
+    {
+       return key;   
+    }
+    if(root->val<key && root->val>flor)
+    {
+        flor=root->val;
+    }
+    
+    if(key<root->val)
+    {
+        return floorBST(root->left,key,flor);
+    }
+    if(key>root->val)
+    {
+        return floorBST(root->right,key,flor);
+    }
+}
+    
+
 
 int main()
 {
@@ -59,6 +85,7 @@ int main()
     //     cin>>check;
     // }
     
+    
     root=insertBST(root,12);
     root=insertBST(root,8);
     root=insertBST(root,15);
@@ -72,5 +99,18 @@ int main()
     root=insertBST(root,16);
     
     preorder(root);
+    
+    
+    cout<<endl<<"Enter the key"<<endl;
+    int key;
+    cin>>key;
+    int flor=floorBST(root,key,0);
+    if(flor==0)
+    {
+        cout<<"Not found"<<endl;
+    }
+    else{
+        cout<<flor;
+    }
     return 0;
 }
